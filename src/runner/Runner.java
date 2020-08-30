@@ -18,7 +18,9 @@ import org.testng.annotations.Parameters;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
-@CucumberOptions(features="/features", glue="steps", monochrome=true, strict = true)
+@CucumberOptions(features="/features", glue="steps", 
+monochrome=true, 
+strict = true)
 
 public class Runner extends AbstractTestNGCucumberTests{
 	public WebDriver driver;
