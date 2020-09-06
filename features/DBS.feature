@@ -1,5 +1,5 @@
 Feature: DBS Demo project
-  I want to use this feature file for dbs demo testing purpose
+  I want to use this feature file for DBS demo testing purpose
 
   Scenario: DBS Demo project Scenario
     Given user has launched the url
