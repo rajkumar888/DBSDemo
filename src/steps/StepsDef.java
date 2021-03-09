@@ -1,11 +1,15 @@
 package steps;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
-import io.cucumber.core.gherkin.vintage.internal.gherkin.ast.DataTable;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -22,53 +26,81 @@ public class StepsDef extends Runner {
 		driver.get("https://www.dbs.com.sg/personal/default.page");
 	}
 
-	@When("user clicks on Learn More button")
+	@When("^user clicks on Learn More button$")
 	public void user_clicks_on_Learn_More_button() {
 
 		element = driver.findElement(By.xpath("//button[.='Learn more']"));
 		element.click();
-
 	}
+	
+	
+	@When("^user clicks on Cards link$")
+	public void user_clicks_on_Cards_link() {
 
+		element = driver.findElement(By.xpath("//a[(text()='Cards']"));
+		actions.moveToElement(element).click().build().perform();
+	}
+	
+	@When("^user clicks on Credit Cards link$")
+	public void user_clicks_on_Credit_Cards_link() {
+
+		element = driver.findElement(By.xpath("//a[text()='Credit Cards']"));
+		actions.moveToElement(element).click().build().perform();
+	}
+	
+	
+	
+	@When("^user selects the two cards$")
+	public void user_selects_the_two_cards() {
+
+		element = driver.findElement(By.xpath("//input[@id='cb0']/following-sibling::label/div/span"));
+		actions.moveToElement(element).click().build().perform();
+		
+		element = driver.findElement(By.xpath("//input[@id='cb1']/following-sibling::label/div/span"));
+		actions.moveToElement(element).click().build().perform();
+	}
+	
+	
+	@When("^user clicks on compare button$")
+	public void user_clicks_on_compare_button() {
+
+		element = driver.findElement(By.xpath("//button[@id='cardCompareBtn']"));
+		actions.moveToElement(element).click().build().perform();
+	}
+	
+	@When("^user verifies the following details$")
+	public void user_verifies_the_following_details(DataTable table) {
+
+		List<List<String>> rows = table.asLists(String.class);
+//		List<List> data = table.raw();
+		
+		SoftAssert softAssert = new SoftAssert();
+
+		String locator="//div[@class='cardheader'][text()='Card Type']/following-sibling::div[1]";
+		String expectedValue=rows.get(1).get(0);
+		element = driver.findElement(By.xpath(locator));
+		String actualValue=element.getText();
+		softAssert.assertEquals(actualValue, expectedValue, "Values are not matching");
+		
+		locator="(//div[@class='sub-header'][text()='VISA'])[2]";
+		expectedValue=rows.get(1).get(1);
+		element = driver.findElement(By.xpath(locator));
+		actualValue=element.getText();
+		softAssert.assertEquals(actualValue, expectedValue, "Values are not matching");
+		
+		// similarly we can assert the entire table with actual values
+		
+		softAssert.assertAll();
+		System.out.print("Assertion done successfully");
+		
+	}
+	
+	
 	@When("user Scroll down and navigates to Singapore on the left panel")
 	public void user_Scroll_down_and_navigates_to_Singapore_on_the_left_panel() {
 
 	}
 
-	@When("user Read and writes the table in excel sheet")
-	public void user_Read_and_writes_the_table_in_excel_sheet() {
-
-	}
-
-	@When("user Navigates to About in the header tabs")
-	public void user_Navigates_to_About_in_the_header_tabs() {
-
-	}
-
-	@When("user Navigates to Who we are tab")
-	public void user_Navigates_to_Who_we_are_tab() {
-
-	}
-
-	@When("user Navigates to  Our Awards & Accolades")
-	public void user_Navigates_to_Our_Awards_Accolades() {
-
-	}
-
-	@Then("Validates the total number of awards displayed on the page is {int}")
-	public void validates_the_total_number_of_awards_displayed_on_the_page_is(Integer int1) {
-
-	}
-
-	@Then("Validates all the award name and caption of the awards mentioned in the below table")
-	public void validates_all_the_award_name_and_caption_of_the_awards_mentioned_in_the_below_table(
-			DataTable dataTable) {
-
-	}
-
-	@When("user prints in the cucumber report in the form of a table")
-	public void user_prints_in_the_cucumber_report_in_the_form_of_a_table() {
-
-	}
+	
 
 }
