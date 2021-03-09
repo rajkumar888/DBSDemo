@@ -94,13 +94,4 @@ public class StepsDef extends Runner {
 		System.out.print("Assertion done successfully");
 		
 	}
-	
-	
-	@When("user Scroll down and navigates to Singapore on the left panel")
-	public void user_Scroll_down_and_navigates_to_Singapore_on_the_left_panel() {
-
-	}
-
-	
-
 }
